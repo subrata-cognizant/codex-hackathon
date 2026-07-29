@@ -1,0 +1,1 @@
+export function ArtifactViewer({title,content}:{title:string;content:unknown}){return <section className="viewer"><div className="viewer-head"><small>ARTIFACT PREVIEW</small><h2>{title}</h2></div><pre>{typeof content==="string"?content:JSON.stringify(content,null,2)}</pre></section>}

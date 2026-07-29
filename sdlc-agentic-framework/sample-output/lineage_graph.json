@@ -1,0 +1,121 @@
+{
+  "nodes": [
+    {
+      "id": "REQ-001",
+      "type": "Requirement",
+      "label": "Employee Leave Management"
+    },
+    {
+      "id": "BRD-001",
+      "type": "BRD",
+      "label": "Leave BRD"
+    },
+    {
+      "id": "EPIC-001",
+      "type": "Epic",
+      "label": "Leave lifecycle"
+    },
+    {
+      "id": "STORY-001",
+      "type": "Story",
+      "label": "Submit leave"
+    },
+    {
+      "id": "AC-001",
+      "type": "Acceptance Criteria",
+      "label": "Valid submission"
+    },
+    {
+      "id": "CODE-001",
+      "type": "Code",
+      "label": "Leave service"
+    },
+    {
+      "id": "TEST-001",
+      "type": "Test",
+      "label": "Submission test"
+    },
+    {
+      "id": "REVIEW-001",
+      "type": "Review",
+      "label": "Code review"
+    },
+    {
+      "id": "SANITY-001",
+      "type": "Sanity Result",
+      "label": "Sanity pass"
+    },
+    {
+      "id": "DEFECT-001",
+      "type": "Defect",
+      "label": "No open defects"
+    },
+    {
+      "id": "QA-001",
+      "type": "QA Handoff",
+      "label": "QA package"
+    },
+    {
+      "id": "RELEASE-001",
+      "type": "Release",
+      "label": "PoC release"
+    }
+  ],
+  "edges": [
+    {
+      "from": "REQ-001",
+      "to": "BRD-001",
+      "relationship": "GENERATES"
+    },
+    {
+      "from": "BRD-001",
+      "to": "EPIC-001",
+      "relationship": "DECOMPOSES_TO"
+    },
+    {
+      "from": "EPIC-001",
+      "to": "STORY-001",
+      "relationship": "CONTAINS"
+    },
+    {
+      "from": "STORY-001",
+      "to": "AC-001",
+      "relationship": "HAS_CRITERIA"
+    },
+    {
+      "from": "AC-001",
+      "to": "CODE-001",
+      "relationship": "IMPLEMENTED_BY"
+    },
+    {
+      "from": "CODE-001",
+      "to": "TEST-001",
+      "relationship": "VERIFIED_BY"
+    },
+    {
+      "from": "TEST-001",
+      "to": "REVIEW-001",
+      "relationship": "REVIEWED_BY"
+    },
+    {
+      "from": "REVIEW-001",
+      "to": "SANITY-001",
+      "relationship": "VALIDATED_BY"
+    },
+    {
+      "from": "SANITY-001",
+      "to": "DEFECT-001",
+      "relationship": "PRODUCES_DEFECT_STATUS"
+    },
+    {
+      "from": "DEFECT-001",
+      "to": "QA-001",
+      "relationship": "HANDED_OFF_AS"
+    },
+    {
+      "from": "QA-001",
+      "to": "RELEASE-001",
+      "relationship": "RELEASED_AS"
+    }
+  ]
+}

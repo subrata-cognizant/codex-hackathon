@@ -1,0 +1,1 @@
+{"related_brds":["BRD-HR-007 Time Tracking"],"reusable_patterns":["approval workflow","outbox notifications","append-only audit"],"previous_decisions":["JSON persistence accepted for PoC"],"code_modules":["identity adapter","notification gateway"],"risks":["overlapping dates","balance race conditions"]}
