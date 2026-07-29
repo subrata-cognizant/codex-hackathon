@@ -29,6 +29,11 @@ npm start
 ```
 Open `http://localhost:5173` (or the URL Vite prints).
 
+The UI derives the API host from the browser URL, so both `localhost` and
+`127.0.0.1` work. Set `VITE_API_URL` only when the backend is hosted elsewhere.
+If the backend is stopped, the dashboard displays the exact local API address
+and startup command instead of the browser's unhelpful `Failed to fetch` error.
+
 ## API usage
 ```bash
 curl -X POST http://localhost:8000/api/workflow/run -H 'Content-Type: application/json' -d '{"requirement_text":"Employees submit leave requests. Managers approve or reject requests. The system notifies users and maintains an audit trail."}'
@@ -36,6 +41,7 @@ curl -X POST http://localhost:8000/api/workflow/approve/brd
 curl -X POST http://localhost:8000/api/workflow/approve/code-plan
 curl http://localhost:8000/api/artifacts
 curl http://localhost:8000/api/traceability
+curl http://localhost:8000/api/demo-data
 ```
 The first response contains `status: awaiting_brd_approval`, completed `stages`, and artifact references. Approvals advance to `awaiting_code_plan_approval` and then `complete`. Validation errors use HTTP 422; invalid/duplicate transitions use 409; missing artifacts use 404.
 
@@ -55,7 +61,11 @@ docker compose up --build
 UI is exposed on port 3000 and API on 8000.
 
 ## Demo flow
-Paste the provided leave requirement; run agents; inspect/approve BRD; inspect backlog, sprint and code plan; approve implementation; inspect generated code, review, sanity and release artifacts; load the lineage graph. Stop at each gate to emphasize human governance.
+Use **Load demo JSON** to populate intake with the checked-in sample requirement,
+employees, managers, balances, leave requests, and audit trail. Run agents;
+inspect/approve BRD; inspect backlog, sprint and code plan; approve
+implementation; inspect generated code, review, sanity and release artifacts;
+then load the lineage graph. Stop at each gate to emphasize human governance.
 
 ## Evaluator quick verification
 The project includes a genuinely runnable sample feature backed by standard-library SQLite—not only generated text. Submit a request using employee `E001`, query its balance, approve it as manager `M001`, then repeat the date range to see deterministic `DUPLICATE_REQUEST` handling. Employee `E002` has two days, enabling an `INSUFFICIENT_BALANCE` example. Every response carries requirement, story, acceptance-criteria, and code references.
