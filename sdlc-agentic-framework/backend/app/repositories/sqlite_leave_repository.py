@@ -50,6 +50,27 @@ class SQLiteLeaveRepository:
     def decide(self, request_id: str, status: str, manager_id: str) -> dict[str, Any]:
         now=datetime.utcnow().isoformat()
         with self._connect() as db:
-            db.execute("UPDATE leave_requests SET status=? WHERE id=?",(status,request_id))
+            # Lock before reading so two concurrent approvals cannot both spend the
+            # same balance.  The status change, balance debit, and audit entry are
+            # committed (or rolled back) as one transaction by the context manager.
+            db.execute("BEGIN IMMEDIATE")
+            request = db.execute(
+                "SELECT * FROM leave_requests WHERE id=? AND manager_id=? AND status='PENDING'",
+                (request_id, manager_id),
+            ).fetchone()
+            if request is None:
+                raise ValueError("Leave request is no longer pending")
+            if status == "APPROVED":
+                debit = db.execute(
+                    "UPDATE employees SET balance=balance-? "
+                    "WHERE id=? AND balance>=?",
+                    (request["days"], request["employee_id"], request["days"]),
+                )
+                if debit.rowcount != 1:
+                    raise ValueError("Insufficient leave balance at approval time")
+            db.execute(
+                "UPDATE leave_requests SET status=? WHERE id=? AND status='PENDING'",
+                (status,request_id),
+            )
             db.execute("INSERT INTO leave_audit(request_id,action,actor_id,occurred_at) VALUES(?,?,?,?)",(request_id,status,manager_id,now))
             return dict(db.execute("SELECT * FROM leave_requests WHERE id=?",(request_id,)).fetchone())

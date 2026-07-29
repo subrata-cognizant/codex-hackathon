@@ -10,3 +10,10 @@ def test_duplicate_requirement(tmp_path):
  with pytest.raises(ValueError,match='Duplicate'): s.run(text)
 def test_invalid_gate(tmp_path):
  with pytest.raises(ValueError): make(tmp_path).approve_brd()
+def test_non_leave_requirement_drives_brd_and_backlog(tmp_path):
+ s=make(tmp_path); result=s.run('Users submit invoices and finance managers approve payments with an audit trail.')
+ assert 'Employee Leave' not in result['brd']
+ assert 'Users submit invoices' in result['brd']
+ backlog=s.approve_brd()['backlog']
+ assert 'invoice' in backlog['epics'][0]['title'].lower()
+ assert all('leave' not in story['title'].lower() for story in backlog['epics'][0]['stories'])
