@@ -13,7 +13,14 @@ from app.services.traceability_service import TraceabilityService
 from app.services.workflow_service import WorkflowService
 
 app=FastAPI(title="SDLC Agentic Framework",version="1.1.0")
-app.add_middleware(CORSMiddleware,allow_origins=["http://localhost:3000","http://localhost:5173"],allow_methods=["*"],allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    # The PoC has no credentials and is intentionally usable from localhost,
+    # Docker, LAN addresses, and IDE preview hosts without CORS fetch failures.
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 artifact_repo=JsonRepository(ARTIFACT_DIR)
 app.state.workflow=WorkflowService(artifact_repo,DATA_DIR/"mock_knowledge_graph.json")
 app.state.artifacts=ArtifactService(artifact_repo)
