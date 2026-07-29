@@ -1,0 +1,506 @@
+{
+  "info": {
+    "name": "SDLC Agentic Framework",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Run requests in order. Examples and tests cover both gates, artifacts, and lineage."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Run Full SDLC Workflow",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/workflow/run",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "workflow",
+            "run"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"requirement_text\": \"Employees submit leave requests. Managers approve or reject requests. The system sends notifications and maintains an audit trail.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Expected sample response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/workflow/run",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "workflow",
+                "run"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requirement_text\": \"Employees submit leave requests. Managers approve or reject requests. The system sends notifications and maintains an audit trail.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\"status\": \"awaiting_brd_approval\", \"artifact_references\": [\"BRD.md\"]}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"BRD gate reached\",()=>pm.expect(pm.response.json().status).to.eql(\"awaiting_brd_approval\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Approve BRD",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/workflow/approve/brd",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "workflow",
+            "approve",
+            "brd"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected sample response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/workflow/approve/brd",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "workflow",
+                "approve",
+                "brd"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\"status\": \"complete\", \"artifact_references\": [\"BRD.md\"]}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Code plan gate reached\",()=>pm.expect(pm.response.json().status).to.eql(\"awaiting_code_plan_approval\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Approve Code Plan",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/workflow/approve/code-plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "workflow",
+            "approve",
+            "code-plan"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected sample response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/workflow/approve/code-plan",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "workflow",
+                "approve",
+                "code-plan"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\"status\": \"complete\", \"artifact_references\": [\"BRD.md\"]}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Workflow complete\",()=>pm.expect(pm.response.json().status).to.eql(\"complete\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Artifacts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/artifacts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "artifacts"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected sample response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/artifacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "artifacts"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\"status\": \"complete\", \"artifact_references\": [\"BRD.md\"]}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status is successful\",()=>pm.expect(pm.response.code).to.be.below(300));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Traceability Graph",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/traceability",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "traceability"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected sample response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/traceability",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "traceability"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [],
+          "cookie": [],
+          "body": "{\"status\": \"complete\", \"artifact_references\": [\"BRD.md\"]}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Graph has nodes and edges\",()=>{const j=pm.response.json();pm.expect(j.nodes).to.be.an(\"array\");pm.expect(j.edges).to.be.an(\"array\")});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Submit Valid Leave Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leave/requests",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leave",
+            "requests"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"employee_id\": \"E001\",\n  \"start_date\": \"2027-01-10\",\n  \"end_date\": \"2027-01-11\",\n  \"days\": 2,\n  \"reason\": \"Family event\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Created and traceable\",()=>{pm.expect(pm.response.code).to.eql(201);pm.expect(pm.response.json().traceability).to.include(\"AC-001\");pm.collectionVariables.set(\"leaveRequestId\",pm.response.json().id)});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Check Leave Balance",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leave/balances/E001",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leave",
+            "balances",
+            "E001"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Balance returned\",()=>pm.expect(pm.response.json().available_days).to.eql(12));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Approve Leave Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/leave/requests/{{leaveRequestId}}/decision",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "leave",
+            "requests",
+            "{{leaveRequestId}}",
+            "decision"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"manager_id\": \"M001\",\n  \"decision\": \"APPROVED\",\n  \"comment\": \"Coverage confirmed\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Approved\",()=>pm.expect(pm.response.json().status).to.eql(\"APPROVED\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Agent Audit",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/workflow/audit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "workflow",
+            "audit"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Audit event array\",()=>pm.expect(pm.response.json().events).to.be.an(\"array\"));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

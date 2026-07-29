@@ -1,0 +1,1 @@
+export function ApprovalGate({label,onApprove}:{label:string;onApprove:()=>void}){return <aside className="gate"><div><span>!</span><p><strong>Human decision required</strong><small>Review the {label} artifact before agents continue.</small></p></div><button onClick={onApprove}>Approve {label} →</button></aside>}

@@ -1,0 +1,19 @@
+# Submission Checklist
+- [x] README.md completed
+- [x] ARCHITECTURE.md completed
+- [x] PROMPTS.md completed
+- [x] PLAN.md completed
+- [x] Source code included
+- [x] Unit tests included
+- [x] Postman collection included
+- [x] Sample dataset included
+- [x] Dockerfile / docker-compose included
+- [x] FIELD_MAPPING.md completed
+- [x] Runnable application verified
+- [ ] Project presentation video prepared
+- [x] node_modules removed
+- [x] .venv removed
+- [x] dependency libraries removed
+- [x] no nested ZIP files
+- [x] final ZIP size under 150 MB
+- [ ] video file size under 50 MB

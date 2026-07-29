@@ -1,0 +1,16 @@
+[
+  {"sequence":1,"agent":"Intake Agent","status":"completed","timestamp":"2026-07-29T08:00:00Z","duration_ms":1.3},
+  {"sequence":2,"agent":"Context Agent","status":"completed","timestamp":"2026-07-29T08:00:00Z","duration_ms":0.7},
+  {"sequence":3,"agent":"Clarification Agent","status":"completed","timestamp":"2026-07-29T08:00:00Z","duration_ms":0.2},
+  {"sequence":4,"agent":"BRD Agent","status":"completed","timestamp":"2026-07-29T08:00:00Z","duration_ms":0.4},
+  {"sequence":5,"agent":"Human Gate: BRD","status":"approved","timestamp":"2026-07-29T08:01:00Z","duration_ms":0},
+  {"sequence":6,"agent":"Story Agent","status":"completed","timestamp":"2026-07-29T08:01:00Z","duration_ms":0.3},
+  {"sequence":7,"agent":"Sprint Plan Agent","status":"completed","timestamp":"2026-07-29T08:01:00Z","duration_ms":0.2},
+  {"sequence":8,"agent":"Code Plan Agent","status":"completed","timestamp":"2026-07-29T08:01:00Z","duration_ms":0.2},
+  {"sequence":9,"agent":"Human Gate: Code Plan","status":"approved","timestamp":"2026-07-29T08:02:00Z","duration_ms":0},
+  {"sequence":10,"agent":"Code Agent","status":"completed","timestamp":"2026-07-29T08:02:00Z","duration_ms":0.5},
+  {"sequence":11,"agent":"Review Agent","status":"completed","timestamp":"2026-07-29T08:02:00Z","duration_ms":0.2},
+  {"sequence":12,"agent":"Sanity Agent","status":"completed","timestamp":"2026-07-29T08:02:00Z","duration_ms":0.2},
+  {"sequence":13,"agent":"Release Agent","status":"completed","timestamp":"2026-07-29T08:02:00Z","duration_ms":0.2},
+  {"sequence":14,"agent":"Knowledge Graph Agent","status":"completed","timestamp":"2026-07-29T08:02:00Z","duration_ms":0.3}
+]
